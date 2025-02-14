@@ -1,10 +1,10 @@
-// Grab elements
+// References to elements
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
 const message = document.getElementById("message");
 const heartContainer = document.getElementById("heartContainer");
 
-// NO BUTTON: Runs away on hover/touch
+// 1) NO BUTTON RUNS AWAY
 // Desktop hover
 noBtn.addEventListener("mouseover", moveNoButton);
 // Mobile touch
@@ -12,16 +12,14 @@ noBtn.addEventListener("touchstart", (e) => {
   e.preventDefault(); // stops the default tap
   moveNoButton();
 });
-
 // If somehow clicked
 noBtn.addEventListener("click", (e) => {
   e.preventDefault();
-  message.innerText = "Nice try! I’m not taking ‘No’ for an answer. ❤️";
+  message.innerText = "Nice try! I'm not taking ‘No’ for an answer, Jennifer. ❤️";
   moveNoButton();
 });
 
 function moveNoButton() {
-  // Random positions within the viewport
   const offsetX = Math.floor(Math.random() * (window.innerWidth - 100));
   const offsetY = Math.floor(Math.random() * (window.innerHeight - 50));
   noBtn.style.position = "absolute";
@@ -29,13 +27,13 @@ function moveNoButton() {
   noBtn.style.top = offsetY + "px";
 }
 
-// YES BUTTON: Show message + hearts confetti
+// 2) YES BUTTON
 yesBtn.addEventListener("click", () => {
-  message.innerText = "Yay! I love you too! ❤️";
+  message.innerText = "Thank you for forgiving my lateness, Jennifer! I love you so much. ❤️";
   createHearts();
 });
 
-// Create hearts confetti
+// 3) HEARTS CONFETTI
 function createHearts() {
   // Spawn hearts every 200ms
   const heartsInterval = setInterval(() => {
@@ -45,7 +43,7 @@ function createHearts() {
     }
   }, 200);
 
-  // Stop making hearts after 10 seconds
+  // Stop creating hearts after 10 seconds
   setTimeout(() => {
     clearInterval(heartsInterval);
   }, 10000);
@@ -63,7 +61,7 @@ function spawnSingleHeart() {
 
   // Random start position
   let xPos = Math.random() * window.innerWidth;
-  let yPos = -50; // slightly above the top of the screen
+  let yPos = -50; // start slightly above top
 
   heart.style.left = xPos + "px";
   heart.style.top = yPos + "px";
@@ -73,14 +71,14 @@ function spawnSingleHeart() {
   const fallSpeed = Math.random() * 3 + 2; // 2 to 5
   const horizontalDrift = (Math.random() - 0.5) * 2; // -1 to 1
 
-  // Animate the heart falling
+  // Animate the heart
   const fallInterval = setInterval(() => {
     xPos += horizontalDrift;
     yPos += fallSpeed;
     heart.style.left = xPos + "px";
     heart.style.top = yPos + "px";
 
-    // Remove heart if it goes off screen
+    // Remove the heart if it goes off screen
     if (yPos > window.innerHeight || xPos < -50 || xPos > window.innerWidth + 50) {
       clearInterval(fallInterval);
       heartContainer.removeChild(heart);
